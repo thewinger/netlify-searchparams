@@ -1,0 +1,18 @@
+[build]
+command = "next build"
+publish = ".next"
+
+[[plugins]]
+package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+from = '/'
+to = '/en'
+status = 301
+conditions = { Language = ['en']}
+
+[[redirects]]
+from = '/'
+to = '/es'
+status = 301
+conditions = { Language = ['es']}
