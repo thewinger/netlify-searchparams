@@ -15,7 +15,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 import BgHeroImg from "@/public/hero-golf.jpg";
-import { Dict, FiltersDD } from "@/types";
+import { Dict, FiltersDD, ParentLocalizacion } from "@/types";
 
 interface Filters {
   operacion: string;

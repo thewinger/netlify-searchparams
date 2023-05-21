@@ -79,3 +79,22 @@ type FiltersDD = {
   localizacionDD: ParentLocalizacion[];
   tipoDD: FilterString[];
 };
+
+type FilterNum = {
+  min: number;
+  max: number;
+};
+
+type FilterString = {
+  name: string;
+  value: string;
+};
+
+interface Localizacion extends FilterString {
+  name: string;
+  value: string;
+}
+
+export interface ParentLocalizacion extends Localizacion {
+  children: Localizacion[];
+}
