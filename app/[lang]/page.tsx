@@ -59,9 +59,7 @@ export default async function Home({ params }: { params: { lang: Locale } }) {
         <h2 className="p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0">
           {dict.destacados}
         </h2>
-        <div className="xhidden lg:block">
-          <FeaturedSlider params={params} propiedades={featured} />
-        </div>
+        <FeaturedSlider params={params} propiedades={featured} />
       </section>
       <section className="relative mx-auto max-w-5xl p-4 py-16 ">
         <h2 className="py-2 text-sm font-semibold uppercase tracking-wide text-zinc-800 lg:px-0">

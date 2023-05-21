@@ -11,7 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import Shimmer from "@/lib/Shimmer";
 import Pill from "@/components/pill";
 import { Featured } from "@/types";
-import useMediaQuery from "@/lib/use-media";
+import useWindowDimensions from "@/lib/use-media";
 
 type Props = {
   propiedades: Featured[];
@@ -19,7 +19,8 @@ type Props = {
 };
 
 const FeaturedSlider = ({ propiedades, params }: Props) => {
-  const vertical = useMediaQuery('(minWidth: "1024px")');
+  const { width } = useWindowDimensions();
+  const vertical = width < 1024 ? true : false;
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false }, [
     Autoplay({
@@ -60,11 +61,17 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
   });
 
   return (
-    <div className={clsx("flex w-full gap-4", !vertical && "flex-col")}>
+    <div
+      className={clsx(
+        "grid w-full gap-4 ",
+        vertical && "grid-cols-1",
+        !vertical && "grid-cols-[9.9rem_1fr]"
+      )}
+    >
       <div
         className={clsx(
           "embla relative m-0 block aspect-[3/2] w-full overflow-hidden rounded p-0",
-          vertical && "order-2 "
+          !vertical && "order-2 "
         )}
       >
         <div
@@ -97,29 +104,29 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
       <div
         className={clsx(
           "embla embla--thumb relative m-0 block overflow-hidden p-0",
-          !vertical && "w-full",
-          vertical && "order-1 w-40"
+          !!vertical && "w-full",
+          !vertical && "order-1 xw-40"
         )}
       >
         <div
-          className={clsx("embla__viewport w-full", vertical && "h-full")}
+          className={clsx("embla__viewport w-full", !vertical && "h-full")}
           ref={thumbViewportRef}
         >
           <div
             className={clsx(
               "embla__container embla__container--thumb xh-full flex gap-1",
-              vertical && "flex-col gap-1"
+              !vertical && "flex-col gap-1"
             )}
           >
             {formattedSlides.map((slide, index) => (
               <div
                 key={index}
                 className={clsx(
-                  "embla__slide embla__slide--thumb aspect-[3/2] w-full basis-1/6 rounded transition-opacity",
+                  "embla__slide embla__slide--thumb aspect-[3/2] w-full basis-1/5 rounded transition-opacity",
                   index == selectedIndex &&
                     "is-selected border-2 border-green-500 opacity-100",
                   !(index == selectedIndex) && "opacity-75",
-                  vertical && "w-full"
+                  !vertical && "w-full"
                 )}
               >
                 <button

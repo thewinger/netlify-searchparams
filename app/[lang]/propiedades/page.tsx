@@ -1,7 +1,13 @@
+import FilterBar from "@/components/filterbar";
+import Filters from "@/components/filters";
 import PropiedadCard from "@/components/propiedad-card";
 import { getDictionary } from "@/get-dictionary";
 import { Locale } from "@/i18n-config";
-import { client, clientFetch } from "@/lib/sanity.client";
+import {
+  client,
+  clientFetch,
+  getFiltersDropdownValues,
+} from "@/lib/sanity.client";
 import { Propiedad } from "@/types";
 import clsx from "clsx";
 import Link from "next/link";
@@ -76,7 +82,7 @@ async function getSearchProperties(
 
 export default async function PropiedadesPage({ params, searchParams }: Props) {
   const dict = await getDictionary(params.lang);
-  /* const filtersDD = await getFiltersDropdownValues(params.lang) */
+  const filtersDD = await getFiltersDropdownValues(params.lang);
   const propiedades = await getSearchProperties(
     searchParams,
     params.lang as Locale
@@ -84,13 +90,13 @@ export default async function PropiedadesPage({ params, searchParams }: Props) {
 
   return (
     <>
-      {/* <FilterBar dict={dict} filtersDD={filtersDD} /> */}
+      <FilterBar dict={dict} filtersDD={filtersDD} />
       <div className=" mx-auto max-w-5xl flex-col gap-6 px-4 py-20 lg:flex lg:flex-row lg:px-6 lg:py-12">
         <div className="relative isolate hidden w-[19.5rem] flex-col lg:flex">
           <h2 className="py-2 text-sm font-semibold uppercase  tracking-wide text-zinc-800 lg:px-0">
             {dict.filters.filtros_title}
           </h2>
-          {/* <Filters dict={dict} filtersDD={filtersDD} /> */}
+          <Filters dict={dict} filtersDD={filtersDD} />
         </div>
 
         <div className="grow">

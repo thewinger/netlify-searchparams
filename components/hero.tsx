@@ -4,7 +4,7 @@ import { Locale } from "@/i18n-config";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Fragment, useCallback, useMemo, useState } from "react";
-import { MagnifyingGlassIcon } from "./ui/icons";
+import { MagnifyingGlassIcon } from "./icons";
 import {
   Select,
   SelectContent,
