@@ -14,15 +14,14 @@ import clsx from "clsx";
 import { Propiedad } from "@/types";
 import { client, clientFetch } from "@/lib/sanity.client";
 import { groq } from "next-sanity";
-import ImageSlider from "@/components/image-slider";
 
 export async function getAllPropiedadesSlug(): Promise<
   Pick<Propiedad, "slug">[]
 > {
   if (client) {
-    const slugs: string[] = await clientFetch(groq`
-      *[_type == "propiedad" && defined(slug.current)][].slug.current
-      `);
+    const slugs: string[] = await clientFetch(
+      groq` *[_type == "propiedad" && defined(slug.current)][].slug.current `
+    );
     return slugs.map((slug) => ({ slug }));
   }
   return [];
@@ -35,38 +34,11 @@ export async function getPropiedadBySlug(
   if (client) {
     return (
       (await clientFetch(
-        groq`
-          *[_type == "propiedad" && slug.current == $slug][0] {
-            _id,
-            title,
-            "slug": slug.current,
-            bathrooms,
-            bedrooms,
-            "operacion": {
-                "name": select(operacion->title[$lang] != "" => operacion->title[$lang], operacion->title['es']),
-                "value": operacion._ref
-            },
-            "localizacion": localizacion->title,
-            "localizacionPadre": localizacion->{parent->{title}},
-            "tipo": select(tipo->title[$lang] != "" => tipo->title[$lang], tipo->title['es']),
-            price,
-            size,
-            year,
-            "caracteristicas": caracteristicas[]{
-            "title": select(
-              @->title[$lang] != "" => @->title[$lang],
-              @->title['es']),
-            },
-            "images": images[],
-            "description": coalesce(description[$lang], description['es']),
-          }
-        `,
-
+        groq` *[_type == "propiedad" && slug.current == $slug][0] { _id, title, "slug": slug.current, bathrooms, bedrooms, "operacion": { "name": select(operacion->title[$lang] != "" => operacion->title[$lang], operacion->title['es']), "value": operacion._ref }, "localizacion": localizacion->title, "localizacionPadre": localizacion->{parent->{title}}, "tipo": select(tipo->title[$lang] != "" => tipo->title[$lang], tipo->title['es']), price, size, year, "caracteristicas": caracteristicas[]{ "title": select( @->title[$lang] != "" => @->title[$lang], @->title['es']), }, "images": images[], "description": coalesce(description[$lang], description['es']), } `,
         { slug, lang }
       )) || ({} as any)
     );
   }
-
   return {} as any;
 }
 
@@ -76,7 +48,8 @@ export default async function Propiedad({
   params: { lang: Locale; slug: string };
 }) {
   const dict = await getDictionary(params.lang);
-  const propiedad = await getPropiedadBySlug(params.lang, params.slug);
+  const propiedadData = getPropiedadBySlug(params.lang, params.slug);
+  const propiedad = await propiedadData;
 
   return (
     <div className=" py-12 sm:py-12">
@@ -90,7 +63,11 @@ export default async function Propiedad({
           <div className="lg:-col-end-1 relative flex flex-col md:flex-row md:items-start md:gap-2 lg:row-span-3">
             <Pill>{propiedad.operacion.name.toUpperCase()}</Pill>
             <div className="sliderContainer lg:px4 relative flex grow items-center justify-center overflow-x-hidden">
-              <ImageSlider key={propiedad.slug} slides={propiedad.images} />
+              <ProductSlider
+                vertical
+                key={propiedad.slug}
+                slides={propiedad.images}
+              />
             </div>
           </div>
         )}

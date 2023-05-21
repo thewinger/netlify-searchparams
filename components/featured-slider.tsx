@@ -11,7 +11,6 @@ import { useCallback, useEffect, useState } from "react";
 import Shimmer from "@/lib/Shimmer";
 import Pill from "@/components/pill";
 import { Featured } from "@/types";
-import useWindowDimensions from "@/lib/use-media";
 import { useMedia } from "react-media";
 
 type Props = {
@@ -20,7 +19,7 @@ type Props = {
 };
 
 const FeaturedSlider = ({ propiedades, params }: Props) => {
-  const isSmallScreen = useMedia({ query: "(min-width: 1024px)" });
+  const isSmallScreen = useMedia({ query: "(max-width: 1024px)" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false }, [
     Autoplay({

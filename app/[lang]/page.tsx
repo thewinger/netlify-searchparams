@@ -79,15 +79,3 @@ export default async function Home({ params }: { params: { lang: Locale } }) {
     </>
   );
 }
-
-export async function generateStaticParams() {
-  const locales = i18n.locales;
-
-  const params = locales!.flatMap((locale) => {
-    return {
-      lang: locale,
-    };
-  });
-
-  return params;
-}

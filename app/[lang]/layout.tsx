@@ -1,4 +1,4 @@
-import { Locale } from "@/i18n-config";
+import { Locale, i18n } from "@/i18n-config";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/header";
@@ -32,4 +32,16 @@ export default async function RootLayout({
       </body>
     </html>
   );
+}
+
+export async function generateStaticParams() {
+  const locales = i18n.locales;
+
+  const params = locales!.flatMap((locale) => {
+    return {
+      lang: locale,
+    };
+  });
+
+  return params;
 }

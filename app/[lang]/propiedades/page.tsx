@@ -71,8 +71,6 @@ async function getSearchProperties(
         _createdAt,
     } | order(_createdAt desc)[0...50]`;
 
-    console.log(query);
-
     return await clientFetch(query, { lang });
   }
 
