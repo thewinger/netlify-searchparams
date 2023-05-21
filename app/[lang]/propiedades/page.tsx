@@ -10,7 +10,6 @@ import {
 } from "@/lib/sanity.client";
 import { Propiedad } from "@/types";
 import clsx from "clsx";
-import Link from "next/link";
 
 type Props = {
   params: {

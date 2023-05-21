@@ -1,36 +1,23 @@
 "use client";
 
-import { Locale } from "@/i18n-config";
+import Shimmer from "@/lib/Shimmer";
 import { urlForImage } from "@/lib/sanity.image";
 import clsx from "clsx";
-import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import Shimmer from "@/lib/Shimmer";
-import Pill from "@/components/pill";
-import { Featured } from "@/types";
-import useWindowDimensions from "@/lib/use-media";
-import { useMedia } from "react-media";
+import { Image as SanityImage } from "sanity";
 
-type Props = {
-  propiedades: Featured[];
-  params: { lang: Locale };
+type PropType = {
+  slides: SanityImage[];
 };
 
-const FeaturedSlider = ({ propiedades, params }: Props) => {
-  const isSmallScreen = useMedia({ query: "(min-width: 1024px)" });
+const ImageSlider = ({ slides }: PropType) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false }, [
-    Autoplay({
-      stopOnMouseEnter: true,
-    }),
-  ]);
+  const [mainViewportRef, embla] = useEmblaCarousel({ skipSnaps: false });
   const [thumbViewportRef, emblaThumbs] = useEmblaCarousel({
     containScroll: "keepSnaps",
     dragFree: true,
-    axis: "x",
   });
 
   const onThumbClick = useCallback(
@@ -53,49 +40,36 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
     embla.on("select", onSelect);
   }, [embla, onSelect]);
 
-  const formattedSlides = propiedades.map((propiedad) => {
+  const formattedSlides = slides.map((slide) => {
     return {
-      sourceUrl: urlForImage(propiedad.coverImage).url(),
-      title: propiedad.coverImage.asset?._ref,
+      sourceUrl: urlForImage(slide).url(),
+      title: slide.asset?._ref,
     };
   });
 
   return (
-    <div
-      className={clsx(
-        "grid w-full gap-4 ",
-        isSmallScreen && "grid-cols-1",
-        !isSmallScreen && "grid-cols-[9.9rem_1fr]"
-      )}
-    >
+    <div className={clsx("flex w-full gap-4 flex-col")}>
       <div
         className={clsx(
-          "embla relative m-0 block aspect-[3/2] w-full overflow-hidden rounded p-0",
-          !isSmallScreen && "order-2 "
+          "embla relative m-0 block w-full overflow-hidden rounded p-0 order-2"
         )}
       >
-        <div
-          className="embla__viewport aspect-[3/2] w-full"
-          ref={mainViewportRef}
-        >
+        <div className="embla__viewport w-full" ref={mainViewportRef}>
           <div className="embla__container xoverflow-x-hidden flex h-full gap-2">
-            {propiedades.map((propiedad) => (
-              <Link
-                key={propiedad.slug}
-                href={`/${params.lang}/propiedad/${propiedad.slug}`}
-                className="embla__slide relative aspect-[3/2] min-w-full shrink-0 grow-0 overflow-hidden rounded-md "
-              >
-                <Pill>{`${propiedad.tipo} - ${propiedad.operacion}`}</Pill>
-                {propiedad && propiedad.coverImage && (
+            {formattedSlides.map((slide, index) => (
+              <div className="embla__slide min-w-full" key={index}>
+                <div className="embla__slide__inner relative aspect-[3/2] h-full overflow-hidden rounded">
                   <Image
-                    src={urlForImage(propiedad.coverImage).url()}
-                    alt={propiedad.title}
+                    className="embla__slide__img relative block rounded object-cover"
+                    src={slide.sourceUrl}
+                    alt={slide.title ? slide.title : ""}
+                    fill
                     placeholder="blur"
                     blurDataURL={Shimmer}
-                    fill
+                    priority
                   />
-                )}
-              </Link>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -104,29 +78,28 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
       <div
         className={clsx(
           "embla embla--thumb relative m-0 block overflow-hidden p-0",
-          !!isSmallScreen && "w-full",
-          !isSmallScreen && "order-1 xw-40"
+          "w-full"
         )}
       >
         <div
-          className={clsx("embla__viewport w-full", !isSmallScreen && "h-full")}
+          className={clsx("embla__viewport w-full", "h-full")}
           ref={thumbViewportRef}
         >
           <div
             className={clsx(
               "embla__container embla__container--thumb xh-full flex gap-1",
-              !isSmallScreen && "flex-col gap-1"
+              "flex-col gap-1"
             )}
           >
             {formattedSlides.map((slide, index) => (
               <div
                 key={index}
                 className={clsx(
-                  "embla__slide embla__slide--thumb aspect-[3/2] w-full basis-1/5 rounded transition-opacity",
+                  "embla__slide embla__slide--thumb aspect-[3/2] w-1/5 shrink-0 rounded transition-opacity",
                   index == selectedIndex &&
                     "is-selected border-2 border-green-500 opacity-100",
                   !(index == selectedIndex) && "opacity-75",
-                  !isSmallScreen && "w-full"
+                  "w-full"
                 )}
               >
                 <button
@@ -139,6 +112,7 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
                     src={slide.sourceUrl}
                     alt={slide.title ? slide.title : ""}
                     fill
+                    priority
                   />
                 </button>
               </div>
@@ -150,4 +124,4 @@ const FeaturedSlider = ({ propiedades, params }: Props) => {
   );
 };
 
-export default FeaturedSlider;
+export default ImageSlider;
