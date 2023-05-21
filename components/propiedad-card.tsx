@@ -1,7 +1,6 @@
 import { urlForImage } from "@/lib/sanity.image";
 import { formatEUR } from "@/lib/utils";
 import Image from "next/image";
-import Pill from "./Pill";
 import {
   BathtubIcon,
   BedIcon,
@@ -13,6 +12,7 @@ import {
 import { Locale } from "@/i18n-config";
 import Link from "next/link";
 import { Dict, Propiedad } from "@/types";
+import Pill from "./pill";
 
 type Props = {
   propiedad: Propiedad;
