@@ -51,9 +51,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        heroImg: 'url("../public/hero-golf.jpg")',
-        /* heroImg: 'url("../public/hero-golfball.jpeg")', */
-        footerBorder: 'url("../public/footer_border.svg")',
+        footerBorder: 'url("/footer_border.svg")',
         input: "linear-gradient(to bottom, #fff, #f4f4f5)",
       },
       gridTemplateColumns: {
