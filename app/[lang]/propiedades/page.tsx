@@ -39,7 +39,7 @@ async function getSearchProperties(
     };
 
     for (const [key, value] of Object.entries(searchParams)) {
-      const queryFn = queryMap[key];
+      const queryFn = (queryMap as any)[key];
       if (queryFn) {
         query += ` && ${queryFn(value)} `;
       } else {
