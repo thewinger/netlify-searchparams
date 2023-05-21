@@ -69,3 +69,13 @@ type Dict = {
     habitaciones_label: string;
   };
 };
+
+type FiltersDD = {
+  priceRentDD: number;
+  priceSaleDD: number;
+  bedroomsDD: number;
+  bathroomsDD: number;
+  operacionDD: FilterString[];
+  localizacionDD: ParentLocalizacion[];
+  tipoDD: FilterString[];
+};

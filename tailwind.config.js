@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -50,6 +50,15 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      backgroundImage: {
+        heroImg: 'url("../public/hero-golf.jpg")',
+        /* heroImg: 'url("../public/hero-golfball.jpeg")', */
+        footerBorder: 'url("../public/footer_border.svg")',
+        input: "linear-gradient(to bottom, #fff, #f4f4f5)",
+      },
+      gridTemplateColumns: {
+        cards: "repeat(auto-fill, minmax(min(18rem, 100%),  1fr))",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -71,5 +80,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-}
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
+    require("@tailwindcss/typography"),
+  ],
+};

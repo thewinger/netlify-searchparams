@@ -1,12 +1,15 @@
 import { getDictionary } from "@/get-dictionary";
-import { Locale } from "@/i18n-config";
-import { client, clientFetch } from "@/lib/sanity.client";
+import { Locale, i18n } from "@/i18n-config";
+import {
+  client,
+  clientFetch,
+  getFiltersDropdownValues,
+} from "@/lib/sanity.client";
 import { FrontPage } from "@/types";
 import { groq } from "next-sanity";
-import Image from "next/image";
-import Link from "next/link";
-import FeaturedSlider from "@/components/FeaturedSlider";
+import FeaturedSlider from "@/components/featured-slider";
 import PropiedadCard from "@/components/propiedad-card";
+import Hero from "@/components/hero";
 
 const frontPageQuery = groq`
 {
@@ -48,9 +51,10 @@ async function getFrontPage(lang: Locale): Promise<FrontPage> {
 export default async function Home({ params }: { params: { lang: Locale } }) {
   const dict = await getDictionary(params.lang);
   const { featured, latest } = await getFrontPage(params.lang);
-  /* const filtersDD = await getFiltersDropdownValues(params.lang) */
+  const filtersDD = await getFiltersDropdownValues(params.lang);
   return (
     <>
+      <Hero params={params} dict={dict} filtersDD={filtersDD} />
       <section className="relative mx-auto max-w-5xl py-4 lg:px-4">
         <h2 className="p-2 px-4 text-sm font-semibold  uppercase tracking-wide text-zinc-800 lg:px-0">
           {dict.destacados}
@@ -65,15 +69,27 @@ export default async function Home({ params }: { params: { lang: Locale } }) {
         </h2>
         <div className="grid grid-cols-cards gap-6">
           {latest.map((propiedad) => (
-            <Link
+            <PropiedadCard
               key={propiedad.slug}
-              href={`${params.lang}/propiedad/${propiedad.slug}`}
-            >
-              {/* <PropiedadCard dict={dict} propiedad={propiedad} /> */}
-            </Link>
+              params={params}
+              dict={dict}
+              propiedad={propiedad}
+            />
           ))}
         </div>
       </section>
     </>
   );
+}
+
+export async function generateStaticParams() {
+  const locales = i18n.locales;
+
+  const params = locales!.flatMap((locale) => {
+    return {
+      lang: locale,
+    };
+  });
+
+  return params;
 }
