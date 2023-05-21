@@ -13,7 +13,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] };
 };
 
-export async function getSearchProperties(
+async function getSearchProperties(
   searchParams: { [key: string]: string | string[] },
   lang: Locale
 ): Promise<Propiedad[]> {
