@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import Shimmer from "@/lib/Shimmer";
-import Pill from "@/components/Pill";
+import Pill from "@/components/pill";
 import { Featured } from "@/types";
 import useMediaQuery from "@/lib/use-media";
 
