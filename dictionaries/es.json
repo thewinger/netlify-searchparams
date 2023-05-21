@@ -1,0 +1,39 @@
+{
+  "header": {
+    "email": "Contactar por correo",
+    "telefono": "Teléfonos de contacto",
+    "lang_switcher": "Cambiar idioma"
+  },
+  "slogan": "¡Descubre la casa perfecta cerca de los greens!",
+  "destacados": "Destacados",
+  "ultimos_anadidos": "Últimos añadidos",
+  "contactar_button": "Contactar",
+  "alquiler_tag": "mes",
+  "resultados": "Resultados",
+  "resultado": "Resultado",
+  "footer": {
+    "quienes_somos": {
+      "quienes_somos_label": "Quienes Somos",
+      "quienes_somos_text": "<p class='py-2'>Agencia inmobiliaria ubicada en el Centro Comercial dentro del Residencial Bonalba especializada en la compraventa y el alquiler de viviendas, plazas de parking y locales comerciales en la zona. Más de 15 años en Bonalba nos avalan para dar el mejor servicio y atención a nuestros clientes.</p><p>Tambien ofrecemos servicio postventa y servicios integrales con el fin de facilitar a nuestros clientes su bien estar en Bonalba, bien sea para su vivienda de vacaciones, habitual o en alquiler.</p>",
+      "aviso_legal_label": "Aviso legal"
+    },
+    "contacto": {
+      "contacto_label": "Contacto",
+      "horario": "<p>Entre Semana: 10:00 - 19:30<br>Sábados hasta las 14:00</p>"
+    }
+  },
+  "filters": {
+    "filtros_title": "Filtros",
+    "search_button": "Buscar",
+    "tipo_label": "Tipo",
+    "tipo_allValue": "Todos",
+    "tipo_placeholder": "Selecciona un tipo de propiedad…",
+    "localizacion_label": "Localización",
+    "localizacion_allValue": "Todas",
+    "localizacion_placeholder": "Selecciona una localizacion…",
+    "precioMin_label": "Precio min.",
+    "precioMax_label": "Precio max.",
+    "banos_label": "Baños",
+    "habitaciones_label": "Habitaciones"
+  }
+}
